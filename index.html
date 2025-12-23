@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Medicine Alternatives</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, Helvetica, sans-serif; background:#00755E; color: #fff; }
+
+    #container{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background: rgb(51,160,51);
+      color:white;
+      padding:18px;
+    }
+
+    .content{
+      padding:20px;
+      flex: 1 0 auto;
+    }
+
+    .controls{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+
+    label.md{
+      color:white;
+      font-size:18px;
+    }
+
+    input#medicineinput{
+      color:#fff;
+      border:1px solid white;
+      border-radius:999px;
+      padding:10px 14px;
+      background:transparent;
+      min-width:220px;
+      outline:none;
+    }
+    input::placeholder { color: #ddd; }
+
+    button{
+      background: rgb(255,255,0); /* fixed invalid rgb values */
+      border:1px solid white;
+      padding:8px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      color: #000;
+      font-weight:600;
+    }
+
+    #results{
+      margin-top:16px;
+      color:black;
+      background: transparent;
+      border-radius:12px;
+    }
+
+    .card{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      background:white;
+      color: #000;
+      border-radius:12px;
+      padding:12px;
+      margin-bottom:12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+
+    .card img{
+      width:140px;
+      height:120px;
+      object-fit:contain;
+      border-radius:8px;
+      background:#f4f4f4;
+      flex: 0 0 140px;
+    }
+
+    .name{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .tag{
+      position:absolute;
+      margin-top:6px;
+      margin-left:6px;
+      background: #ffdd57;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:700;
+      color:#000;
+      font-size:12px;
+    }
+
+    .card-wrapper{
+      position:relative;
+    }
+
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px 20px;
+      background: rgba(0,0,0,0.08);
+      color:white;
+      margin-top:auto; /* push footer to bottom */
+    }
+
+    .footer h1{ font-size:26px; line-height:1; }
+    .footer img{ width:60px; height:60px; object-fit:cover; border-radius:8px; }
+    .helper-note { color:#f8f8f8; font-size:14px; margin-top:6px; }
+    @media (max-width:600px){
+      .card{ flex-direction:column; align-items:center; text-align:center; }
+      .card img{ width:80%; height:160px; flex: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="navbar">
+      <span>Home</span>
+      <span>Contact us</span>
+    </div>
+
+    <main class="content">
+      <div class="controls">
+        <label class="md" for="medicineinput">Medicine Name</label>
+        <input type="text" id="medicineinput" placeholder="Enter medicine name (e.g. Benadryl)" />
+        <button onclick="findmedicine()">Find alternatives</button>
+      </div>
+
+      <div id="results"></div>
+
+      <p class="helper-note">Try searching: "Benadryl" or "Paracetamol"</p>
+    </main>
+
+    <div class="footer">
+      <div>
+        <h1>Good Morning</h1>
+        <h1 class="rt">Ritesh</h1>
+        <p>Lorum ipsum dolor sit amet.</p>
+        <p>consectetuer adipiscing elit</p>
+      </div>
+      <img src="https://content.jdmagicbox.com/comp/lucknow/l9/0522px522.x522.220327203038.d6l9/catalogue/prdhan-mantri-jan-aushadhi-kendra-lucknow-chemists-0fkvatjnq1.jpg" alt="store">
+    </div>
+  </div>
+
+  <script>
+    const medicine = [
+      {
+        name: "Benadryl",
+        manufacturer:"Johnson & Johnson",
+        price: "Rs. 50-80 per bottle",
+        image: "https://images.apollo247.in/pub/media/catalog/product/b/e/ben0053_1.jpg?tr=q-80,f-webp,w-400,dpr-3,c-at_max%201200w",
+        alternatives:[
+          {
+            name: "Corex",
+            manufacturer:"Pfizer",
+            price: "Rs. 70",
+            image: "https://images.apollo247.in/pub/media/catalog/product/b/e/ben0058_1.jpg?tr=q-80,f-webp,w-400,dpr-3,c-at_max%201200w",
+          },
+          {
+            name: "Ascoril-D",
+            manufacturer:"Glenmark",
+            price: "Rs. 85",
+            image: "https://images.apollo247.in/pub/media/catalog/product/a/s/asc0019.jpg",
+          }
+        ]
+      },
+      {
+        name: "Paracetamol",
+        manufacturer:"Generic",
+        price: "Rs.20-30 per 10 tablets",
+        image: "https://5.imimg.com/data5/SELLER/Default/2022/9/QR/AF/MV/69966959/paracip-paracetamol-650-tablet.jpg",
+        alternatives:[
+          {
+            name: "Crocin",
+            manufacturer:"GlaxoSmithKline",
+            price: "Rs.30 per 10 tablets",
+            image: "https://cdn01.pharmeasy.in/dam/products_otc/H45820/crocin-650-tablet-15-nos-3-1689759566.jpg",
+          },
+          {
+            name: "Dolo 65",
+            manufacturer:"Micro labs",
+            price: "Rs.28",
+            image: "https://assets.truemeds.in/Images/ProductImage/TM-TACR1-011691/dolo-650-tablet-15_dolo-650-tablet-15--TM-TACR1-011691_1.png",
+          }
+        ]
+      }
+    ];
+
+    function findmedicine() {
+      const input = document.getElementById("medicineinput").value.toLowerCase().trim();
+      const resultdiv = document.getElementById("results");
+      resultdiv.innerHTML = "";
+
+      if(!input){
+        resultdiv.innerHTML = `<p style="padding:12px; color:white">Please enter a medicine name.</p>`;
+        return;
+      }
+
+      const med = medicine.find(m => m.name.toLowerCase() === input);
+
+      if(!med){
+        resultdiv.innerHTML = `<p style="padding:12px; color:white">Medicine not found</p>`;
+        return;
+      }
+
+      // original medicine card
+      resultdiv.innerHTML += `
+        <div class="card-wrapper">
+          <div class="card">
+            <img src="${med.image}" alt="${med.name}">
+            <div class="name">
+              <p><b>Name:</b> ${med.name}</p>
+              <p><b>Manufacturer:</b> ${med.manufacturer}</p>
+              <p><b>Price:</b> ${med.price}</p>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // alternatives
+      med.alternatives.forEach(alt => {
+        resultdiv.innerHTML += `
+          <div class="card-wrapper">
+            <div class="card">
+              <img src="${alt.image}" alt="${alt.name}">
+              <div class="name">
+                <p><b>Name:</b> ${alt.name}</p>
+                <p><b>Manufacturer:</b> ${alt.manufacturer}</p>
+                <p><b>Price:</b> ${alt.price}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
