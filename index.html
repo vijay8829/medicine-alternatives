@@ -1,258 +1,255 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Medicine Alternatives</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medicine Alternatives</title>
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background:#00755E;
-      color: #fff;
-    }
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:#00755E;
+  color:#fff;
+}
 
-    #container{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-    }
+/* NAVBAR */
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  padding:16px 20px;
+  background:#33a033;
+}
 
-    /* NAVBAR */
-    .navbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background: rgb(51,160,51);
-      padding:18px;
-    }
+.navbar a{
+  color:#fff;
+  text-decoration:none;
+  font-size:18px;
+  font-weight:bold;
+}
 
-    .navbar a{
-      color:#fff;
-      text-decoration:none;
-      font-size:18px;
-      font-weight:600;
-    }
+/* MAIN */
+.content{
+  padding:20px;
+}
 
-    .navbar a:hover{
-      text-decoration:underline;
-    }
+label{
+  font-size:18px;
+}
 
-    /* CONTENT */
-    .content{
-      padding:20px;
-      flex: 1;
-    }
+input{
+  width:100%;
+  margin-top:8px;
+  padding:12px 16px;
+  border-radius:30px;
+  border:1px solid #fff;
+  background:transparent;
+  color:#fff;
+  outline:none;
+}
 
-    .controls{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-      margin-bottom:16px;
-    }
+input::placeholder{
+  color:#ddd;
+}
 
-    label{
-      font-size:18px;
-    }
+button{
+  margin-top:12px;
+  padding:12px 18px;
+  border-radius:30px;
+  border:none;
+  background:yellow;
+  font-weight:bold;
+  cursor:pointer;
+}
 
-    input{
-      color:#fff;
-      border:1px solid white;
-      border-radius:999px;
-      padding:10px 14px;
-      background:transparent;
-      min-width:220px;
-      outline:none;
-    }
+/* RESULTS */
+#results{
+  margin-top:20px;
+}
 
-    input::placeholder { color: #ddd; }
+/* CARD */
+.card{
+  background:#fff;
+  color:#000;
+  display:flex;
+  gap:14px;
+  padding:14px;
+  border-radius:12px;
+  margin-bottom:14px;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
 
-    button{
-      background: yellow;
-      border:none;
-      padding:10px 16px;
-      border-radius:999px;
-      cursor:pointer;
-      font-weight:700;
-    }
+.card img{
+  width:120px;
+  height:100px;
+  object-fit:contain;
+  background:#f4f4f4;
+  border-radius:8px;
+}
 
-    #results{
-      margin-top:20px;
-    }
+.name p{
+  margin-bottom:6px;
+  font-size:14px;
+}
 
-    .card{
-      display:flex;
-      gap:16px;
-      align-items:center;
-      background:white;
-      color:#000;
-      border-radius:12px;
-      padding:14px;
-      margin-bottom:14px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      text-decoration:none;
-    }
+/* FOOTER */
+.footer{
+  background:rgba(0,0,0,0.1);
+  padding:14px 20px;
+  text-align:center;
+  font-size:14px;
+}
 
-    .card img{
-      width:140px;
-      height:120px;
-      object-fit:contain;
-      border-radius:8px;
-      background:#f4f4f4;
-    }
-
-    .name{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-    }
-
-    /* FOOTER */
-    .footer{
-      padding:16px 20px;
-      background: rgba(0,0,0,0.1);
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .footer p{
-      font-size:14px;
-      color:#eee;
-    }
-
-    .footer img{
-      width:60px;
-      height:60px;
-      border-radius:8px;
-    }
-
-    @media (max-width:600px){
-      .card{
-        flex-direction:column;
-        text-align:center;
-      }
-    }
-  </style>
+/* MOBILE */
+@media(max-width:600px){
+  .card{
+    flex-direction:column;
+    text-align:center;
+  }
+}
+</style>
 </head>
 
 <body>
-<div id="container">
 
-  <!-- NAVBAR -->
-  <div class="navbar">
-    <a href="#home">Home</a>
-    <a href="#about">About Us</a>
-  </div>
+<div class="navbar">
+  <a href="#">Home</a>
+  <a href="#about">About Us</a>
+</div>
 
-  <!-- MAIN CONTENT -->
-  <main class="content" id="home">
-    <div class="controls">
-      <label for="medicineinput">Medicine Name</label>
-      <input type="text" id="medicineinput" placeholder="Enter medicine name (e.g. Benadryl)" />
-      <button onclick="findmedicine()">Find Alternatives</button>
-    </div>
+<div class="content">
+  <label>Medicine Name</label>
+  <input
+    type="text"
+    id="medicineinput"
+    placeholder="Enter medicine name (e.g. Benadryl)"
+    onfocus="showAllMedicines()"
+    onkeyup="findmedicine()"
+  >
 
-    <div id="results"></div>
-  </main>
+  <button onclick="findmedicine()">Find Alternatives</button>
 
-  <!-- ABOUT -->
-  <section class="content" id="about">
-    <h2>About Us</h2>
-    <p>
-      This website helps users find alternative medicines along with
-      manufacturer and price details. Click on any medicine to visit
-      the official pharmacy store.
-    </p>
-  </section>
+  <div id="results"></div>
+</div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <p>© 2025 Medicine Alternatives. All rights reserved.</p>
-    <img src="https://content.jdmagicbox.com/comp/lucknow/l9/0522px522.x522.220327203038.d6l9/catalogue/prdhan-mantri-jan-aushadhi-kendra-lucknow-chemists-0fkvatjnq1.jpg">
-  </div>
+<div class="content" id="about">
+  <h2>About Us</h2>
+  <p>
+    This website helps users find alternative medicines and redirects
+    them to trusted online pharmacy stores for purchase.
+  </p>
+</div>
 
+<div class="footer">
+  © 2025 Medicine Alternatives
 </div>
 
 <script>
-  const shopLink = "https://www.1mg.com/marketer/indica-laboratories-pvt-ltd-73288";
+const shopLink = "https://www.1mg.com/marketer/indica-laboratories-pvt-ltd-73288";
 
-  const medicine = [
-    {
-      name: "Benadryl",
-      manufacturer:"Johnson & Johnson",
-      price: "Rs. 50-80 per bottle",
-      image: "https://images.apollo247.in/pub/media/catalog/product/b/e/ben0053_1.jpg",
-      alternatives:[
-        {
-          name: "Corex",
-          manufacturer:"Pfizer",
-          price: "Rs. 70",
-          image: "https://images.apollo247.in/pub/media/catalog/product/b/e/ben0058_1.jpg"
-        },
-        {
-          name: "Ascoril-D",
-          manufacturer:"Glenmark",
-          price: "Rs. 85",
-          image: "https://images.apollo247.in/pub/media/catalog/product/a/s/asc0019.jpg"
-        }
-      ]
-    },
-    {
-      name: "Paracetamol",
-      manufacturer:"Generic",
-      price: "Rs. 20-30 per 10 tablets",
-      image: "https://5.imimg.com/data5/SELLER/Default/2022/9/QR/AF/MV/69966959/paracip-paracetamol-650-tablet.jpg",
-      alternatives:[
-        {
-          name: "Crocin",
-          manufacturer:"GSK",
-          price: "Rs. 30",
-          image: "https://cdn01.pharmeasy.in/dam/products_otc/H45820/crocin-650-tablet-15-nos-3-1689759566.jpg"
-        },
-        {
-          name: "Dolo 650",
-          manufacturer:"Micro Labs",
-          price: "Rs. 28",
-          image: "https://assets.truemeds.in/Images/ProductImage/TM-TACR1-011691/dolo-650-tablet-15.png"
-        }
-      ]
-    }
-  ];
+const medicine = [
+  {
+    name:"Benadryl",
+    manufacturer:"Johnson & Johnson",
+    price:"Rs. 50-80",
+    image:"https://images.apollo247.in/pub/media/catalog/product/b/e/ben0053_1.jpg",
+    alternatives:[
+      {
+        name:"Corex",
+        manufacturer:"Pfizer",
+        price:"Rs. 70",
+        image:"https://images.apollo247.in/pub/media/catalog/product/b/e/ben0058_1.jpg"
+      },
+      {
+        name:"Ascoril-D",
+        manufacturer:"Glenmark",
+        price:"Rs. 85",
+        image:"https://images.apollo247.in/pub/media/catalog/product/a/s/asc0019.jpg"
+      }
+    ]
+  },
+  {
+    name:"Paracetamol",
+    manufacturer:"Generic",
+    price:"Rs. 20-30",
+    image:"https://5.imimg.com/data5/SELLER/Default/2022/9/QR/AF/MV/69966959/paracip-paracetamol-650-tablet.jpg",
+    alternatives:[
+      {
+        name:"Crocin",
+        manufacturer:"GSK",
+        price:"Rs. 30",
+        image:"https://cdn01.pharmeasy.in/dam/products_otc/H45820/crocin-650-tablet-15-nos-3-1689759566.jpg"
+      },
+      {
+        name:"Dolo 650",
+        manufacturer:"Micro Labs",
+        price:"Rs. 28",
+        image:"https://assets.truemeds.in/Images/ProductImage/TM-TACR1-011691/dolo-650-tablet-15.png"
+      }
+    ]
+  }
+];
 
-  function findmedicine(){
-    const input = document.getElementById("medicineinput").value.toLowerCase();
-    const results = document.getElementById("results");
-    results.innerHTML = "";
+/* SHOW ALL ON CLICK */
+function showAllMedicines(){
+  const results = document.getElementById("results");
+  results.innerHTML = "";
 
-    const med = medicine.find(m => m.name.toLowerCase() === input);
-    if(!med){
-      results.innerHTML = "<p>Medicine not found</p>";
-      return;
-    }
-
+  medicine.forEach(med=>{
     results.innerHTML += createCard(med);
-
     med.alternatives.forEach(alt=>{
       results.innerHTML += createCard(alt);
     });
+  });
+}
+
+/* SEARCH + FILTER */
+function findmedicine(){
+  const input = document.getElementById("medicineinput").value.toLowerCase();
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  if(input === ""){
+    showAllMedicines();
+    return;
   }
 
-  function createCard(m){
-    return `
-      <a href="${shopLink}" target="_blank" class="card">
-        <img src="${m.image}">
-        <div class="name">
-          <p><b>Name:</b> ${m.name}</p>
-          <p><b>Manufacturer:</b> ${m.manufacturer}</p>
-          <p><b>Price:</b> ${m.price}</p>
-        </div>
-      </a>
-    `;
+  let found = false;
+
+  medicine.forEach(med=>{
+    if(med.name.toLowerCase().includes(input)){
+      results.innerHTML += createCard(med);
+      med.alternatives.forEach(alt=>{
+        results.innerHTML += createCard(alt);
+      });
+      found = true;
+    }
+  });
+
+  if(!found){
+    results.innerHTML = "<p>Medicine not found</p>";
   }
+}
+
+/* CARD CREATOR */
+function createCard(m){
+  return `
+    <a href="${shopLink}" target="_blank" class="card">
+      <img src="${m.image}">
+      <div class="name">
+        <p><b>Name:</b> ${m.name}</p>
+        <p><b>Manufacturer:</b> ${m.manufacturer}</p>
+        <p><b>Price:</b> ${m.price}</p>
+      </div>
+    </a>
+  `;
+}
 </script>
 
 </body>
