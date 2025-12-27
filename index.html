@@ -14,8 +14,6 @@
 
 body{
   font-family:Arial, Helvetica, sans-serif;
-  background:#00755E;
-  color:#fff;
 }
 
 /* NAVBAR */
@@ -31,10 +29,23 @@ body{
   text-decoration:none;
   font-size:18px;
   font-weight:bold;
+  cursor:pointer;
 }
 
-/* MAIN */
-.content{
+/* PAGES */
+.page{
+  display:none;
+  min-height:100vh;
+}
+
+.active{
+  display:block;
+}
+
+/* HOME PAGE */
+#home{
+  background:#00755E;
+  color:#fff;
   padding:20px;
 }
 
@@ -67,7 +78,6 @@ button{
   cursor:pointer;
 }
 
-/* RESULTS */
 #results{
   margin-top:20px;
 }
@@ -93,13 +103,16 @@ button{
   border-radius:8px;
 }
 
-.name p{
-  margin-bottom:6px;
-  font-size:14px;
+/* WHITE PAGES */
+.white-page{
+  background:#fff;
+  color:#000;
+  padding:30px 20px;
 }
 
-/* FOOTER */
+/* FOOTER (REVERTED) */
 .footer{
+  height:100%;
   background:rgba(0,0,0,0.1);
   padding:14px 20px;
   text-align:center;
@@ -119,12 +132,13 @@ button{
 <body>
 
 <div class="navbar">
-  <a href="#">Home</a>
-  <a href="#about">About Us</a>
-  <a href="#contact">Contact Us</a>
+  <a onclick="showPage('home')">Home</a>
+  <a onclick="showPage('about')">About Us</a>
+  <a onclick="showPage('contact')">Contact Us</a>
 </div>
 
-<div class="content">
+<!-- HOME PAGE -->
+<div id="home" class="page active">
   <label>Medicine Name</label>
   <input
     type="text"
@@ -133,46 +147,42 @@ button{
     onfocus="showAllMedicines()"
     onkeyup="findmedicine()"
   >
-
   <button onclick="findmedicine()">Find Alternatives</button>
-
   <div id="results"></div>
 </div>
 
-<!-- ABOUT US -->
-<div class="content" id="about">
-  <h2>About Me</h2>
-  <p><br>
-    Hi, I’m <b>Vijay Kiran</b>, a passionate web developer and learner.
-  </p>
-  <p><br>
-    I am a B.Com Finance student at <b>College Of The Oxford University, HSR Layout, Bangalore</b>.
-  </p>
-  <p><br>
+<!-- ABOUT PAGE -->
+<div id="about" class="page white-page">
+  <h2>About Me</h2><br>
+  <p>Hi, I’m <b>Vijay Kiran</b>, a passionate web developer and learner.</p><br>
+
+  <p>
+    I am a B.Com Finance student at
+    <b>College Of The Oxford University, HSR Layout, Bangalore</b>.
+  </p><br>
+
+  <p>
     I worked at <b>Glance (InMobi)</b> as a Product Analyst and as part of the
     Logistics and Operations team, which gave me valuable work experience.
-  </p>
-  <p><br>
+  </p><br>
+
+  <p>
     My hometown is in <b>Bangarpet, Karnataka</b>, and I currently live in Bangalore.
-  </p>
-  <p><br>
+  </p><br>
+
+  <p>
     I learned <b>HTML, CSS, and JavaScript</b> from CodeYogi with hands-on practice.
     I have worked on small projects that helped me understand responsive design
     and clean UI structure. These skills enable me to build functional and
-    user-friendly web interfaces. I’m also enjoying learning more from CodeYogi
-    as I continue improving my skills.
+    user-friendly web interfaces.
   </p>
 </div>
 
-<!-- CONTACT US -->
-<div class="content" id="contact">
-  <h2>Contact Us</h2>
-  <p><br>
-    <b>Email:</b> myxxname@gmail.com
-  </p>
-  <p><br>
-    <b>Phone:</b> +91xxxxxxxx
-  </p>
+<!-- CONTACT PAGE -->
+<div id="contact" class="page white-page">
+  <h2>Contact Us</h2><br>
+  <p><b>Email:</b> myxxname@gmail.com</p><br>
+  <p><b>Phone:</b> +91xxxxxxxx</p>
 </div>
 
 <div class="footer">
@@ -202,76 +212,54 @@ const medicine = [
         image:"https://images.apollo247.in/pub/media/catalog/product/a/s/asc0019.jpg"
       }
     ]
-  },
-  {
-    name:"Paracetamol",
-    manufacturer:"Generic",
-    price:"Rs. 20-30",
-    image:"https://5.imimg.com/data5/SELLER/Default/2022/9/QR/AF/MV/69966959/paracip-paracetamol-650-tablet.jpg",
-    alternatives:[
-      {
-        name:"Crocin",
-        manufacturer:"GSK",
-        price:"Rs. 30",
-        image:"https://cdn01.pharmeasy.in/dam/products_otc/H45820/crocin-650-tablet-15-nos-3-1689759566.jpg"
-      },
-      {
-        name:"Dolo 650",
-        manufacturer:"Micro Labs",
-        price:"Rs. 28",
-        image:"https://assets.truemeds.in/Images/ProductImage/TM-TACR1-011691/dolo-650-tablet-15.png"
-      }
-    ]
   }
 ];
 
-/* SHOW ALL ON CLICK */
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+}
+
 function showAllMedicines(){
   const results = document.getElementById("results");
   results.innerHTML = "";
-
-  medicine.forEach(med=>{
-    results.innerHTML += createCard(med);
-    med.alternatives.forEach(alt=>{
-      results.innerHTML += createCard(alt);
+  medicine.forEach(m=>{
+    results.innerHTML += createCard(m);
+    m.alternatives.forEach(a=>{
+      results.innerHTML += createCard(a);
     });
   });
 }
 
-/* SEARCH + FILTER */
 function findmedicine(){
-  const input = document.getElementById("medicineinput").value.toLowerCase();
+  const input = medicineinput.value.toLowerCase();
   const results = document.getElementById("results");
   results.innerHTML = "";
 
-  if(input === ""){
+  if(!input){
     showAllMedicines();
     return;
   }
 
-  let found = false;
-
-  medicine.forEach(med=>{
-    if(med.name.toLowerCase().includes(input)){
-      results.innerHTML += createCard(med);
-      med.alternatives.forEach(alt=>{
-        results.innerHTML += createCard(alt);
+  let found=false;
+  medicine.forEach(m=>{
+    if(m.name.toLowerCase().includes(input)){
+      results.innerHTML += createCard(m);
+      m.alternatives.forEach(a=>{
+        results.innerHTML += createCard(a);
       });
-      found = true;
+      found=true;
     }
   });
 
-  if(!found){
-    results.innerHTML = "<p>Medicine not found</p>";
-  }
+  if(!found) results.innerHTML="<p>Medicine not found</p>";
 }
 
-/* CARD CREATOR */
 function createCard(m){
   return `
     <a href="${shopLink}" target="_blank" class="card">
       <img src="${m.image}">
-      <div class="name">
+      <div>
         <p><b>Name:</b> ${m.name}</p>
         <p><b>Manufacturer:</b> ${m.manufacturer}</p>
         <p><b>Price:</b> ${m.price}</p>
